@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://bt8twobx7ao7r"]
+
+[ext_resource type="Script" uid="uid://ciofsi6hdwc1a" path="res://player.gd" id="1_of53n"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wm50y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l0los"]
+albedo_color = Color(1, 0, 0.14117648, 1)
+emission_enabled = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_51err"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2dim1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_of53n"]
+transparency = 1
+albedo_color = Color(1, 1, 1, 0.5529412)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_51err"]
+size = Vector3(0.16524506, 1, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_n2818"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n2818"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_cmiif"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n2818"]
+bounce = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_n2818"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_l0los"]
+
+[node name="Node3D" type="Node3D" unique_id=1251550249]
+
+[node name="Floor" type="StaticBody3D" parent="." unique_id=902530644 groups=["floor"]]
+collision_mask = 0
+
+[node name="FloorCollision" type="CollisionShape3D" parent="Floor" unique_id=184992071]
+transform = Transform3D(6, 0, 0, 0, 0.1, 0, 0, 0, 14, 0, 0, 0)
+shape = SubResource("BoxShape3D_wm50y")
+
+[node name="FloorMesh" type="MeshInstance3D" parent="Floor" unique_id=9643557]
+transform = Transform3D(6, 0, 0, 0, 0.1, 0, 0, 0, 14, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_l0los")
+mesh = SubResource("BoxMesh_51err")
+
+[node name="Net" type="StaticBody3D" parent="." unique_id=1803678809 groups=["net"]]
+transform = Transform3D(6, 0, 0, 0, 0.53, 0, 0, 0, 0.05, 0, 1.188, 0)
+collision_mask = 0
+
+[node name="NetMesh" type="MeshInstance3D" parent="Net" unique_id=454569620]
+mesh = SubResource("BoxMesh_2dim1")
+surface_material_override/0 = SubResource("StandardMaterial3D_of53n")
+
+[node name="NetCollision" type="CollisionShape3D" parent="Net" unique_id=567914678]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0013961792, 0, 0)
+shape = SubResource("BoxShape3D_51err")
+
+[node name="Player" type="CharacterBody3D" parent="." unique_id=674464821]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 6)
+collision_layer = 2
+script = ExtResource("1_of53n")
+
+[node name="PlayerCollision" type="CollisionShape3D" parent="Player" unique_id=647767232]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.08, 0)
+shape = SubResource("CapsuleShape3D_n2818")
+
+[node name="CAM" type="Camera3D" parent="Player" unique_id=406842189]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="RacketRange" type="Area3D" parent="Player" unique_id=887943513]
+collision_layer = 0
+collision_mask = 4
+
+[node name="RacketCollision" type="CollisionShape3D" parent="Player/RacketRange" unique_id=1241014213]
+transform = Transform3D(4.8, 0, 0, 0, 4.8, 0, 0, 0, 4.8, 0, 0, 0)
+shape = SubResource("SphereShape3D_n2818")
+
+[node name="Opponent" type="CharacterBody3D" parent="." unique_id=702022953]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, -6)
+collision_layer = 2
+
+[node name="OpponentCollision" type="CollisionShape3D" parent="Opponent" unique_id=1072816527]
+shape = SubResource("CapsuleShape3D_n2818")
+
+[node name="RacketRange" type="Area3D" parent="Opponent" unique_id=1718286387]
+collision_layer = 0
+collision_mask = 4
+
+[node name="RacketCollision" type="CollisionShape3D" parent="Opponent/RacketRange" unique_id=2086950644]
+transform = Transform3D(4.8, 0, 0, 0, 4.8, 0, 0, 0, 4.8, 0, 0, 0)
+shape = SubResource("SphereShape3D_cmiif")
+
+[node name="Shuttlecock" type="RigidBody3D" parent="." unique_id=1339474256 groups=["shuttlecock"]]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 2.5, 0)
+collision_layer = 4
+mass = 0.1
+physics_material_override = SubResource("PhysicsMaterial_n2818")
+freeze_mode = 1
+continuous_cd = true
+contact_monitor = true
+max_contacts_reported = 4
+linear_damp = 2.0
+
+[node name="ShuttleMesh" type="MeshInstance3D" parent="Shuttlecock" unique_id=706419806]
+transform = Transform3D(0.04, 0, 0, 0, 0.04, 0, 0, 0, 0.04, 0, 0, 0)
+mesh = SubResource("SphereMesh_n2818")
+
+[node name="ShuttleCollision" type="CollisionShape3D" parent="Shuttlecock" unique_id=464020052]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0, 0, 0)
+shape = SubResource("SphereShape3D_l0los")
+
+[node name="Light" type="DirectionalLight3D" parent="." unique_id=1873782081]
+transform = Transform3D(1, 0, 0, 0, -0.04309861, 0.9990708, 0, -0.9990708, -0.04309861, 0, 4.8398266, 0)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1615802185]
+
+[node name="Score" type="Label" parent="UI" unique_id=393432145]
+offset_right = 40.0
+offset_bottom = 23.0
